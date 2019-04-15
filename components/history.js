@@ -4,11 +4,13 @@ import { connect } from 'react-redux'
 import { receiveEntries, addEntry } from '../actions'
 import { timeToString, getDailyReminderValue } from '../utils/helpers'
 import { fetchCalendarResults } from '../utils/api'
-import UdaciFitnessCalendar from 'udacifitness-calendar'
+//import UdaciFitnessCalendar from 'udacifitness-calendar'
 import { white } from '../utils/colors'
 import DateHeader from './dateheader'
 import MetricCard from './metriccard'
 import { AppLoading } from 'expo'
+
+import TextButton from "./textbutton";
 
 class History extends Component {
     state = {
@@ -63,11 +65,16 @@ class History extends Component {
         }
 
         return (
-            <UdaciFitnessCalendar
-                items={entries}
-                renderItem={this.renderItem}
-                renderEmptyDate={this.renderEmptyDate}
-            />
+            <View style={styles.center}>
+                {/* <TextButton style={{ marginTop: 17, padding: 10, fontSize: 24 }} onPress={() => console.log('Pressed!')}> */}
+                <TextButton style={{ marginTop: 17, padding: 10, fontSize: 24 }} onPress={() => this.props.navigation.navigate(
+                    'DeckDetail'
+                )}>
+                        Deck 1
+                </TextButton>                
+                <Text style={styles.center}>3 cards</Text>
+            </View>
+
         )
     }
 }
@@ -93,6 +100,13 @@ const styles = StyleSheet.create({
         fontSize: 20,
         paddingTop: 20,
         paddingBottom: 20
+    },
+    center: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginLeft: 30,
+        marginRight: 30
     }
 })
 
