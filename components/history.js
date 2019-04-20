@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, Platform, TouchableOpacity, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import { receiveEntries, addEntry } from '../actions'
 import { timeToString, getDailyReminderValue } from '../utils/helpers'
@@ -56,7 +56,54 @@ class History extends Component {
             </View>
         )
     }
+
+    decks = {
+        "Deck #1": { 
+            name: "Deck #1", 
+            cards: [
+                {question: "xxxxxx", answer: "xxxxxxxx"},
+                {question: "xxxxxx", answer: "xxxxxxxx"},
+                {question: "xxxxxx", answer: "xxxxxxxx"},
+            ] 
+        },
+        "Deck #2": { 
+            name: "Deck #2", 
+            cards: [
+                {question: "xxxxxx", answer: "xxxxxxxx"},
+                {question: "xxxxxx", answer: "xxxxxxxx"},
+                {question: "xxxxxx", answer: "xxxxxxxx"},
+                {question: "xxxxxx", answer: "xxxxxxxx"},
+                {question: "xxxxxx", answer: "xxxxxxxx"},
+            ] 
+        },
+        "Deck #3": { 
+            name: "Deck #3", 
+            cards: [
+                {question: "xxxxxx", answer: "xxxxxxxx"},
+            ] 
+        },
+        "Deck #4": { 
+            name: "Deck #4", 
+            cards: [
+                {question: "xxxxxx", answer: "xxxxxxxx"},
+                {question: "xxxxxx", answer: "xxxxxxxx"},
+                {question: "xxxxxx", answer: "xxxxxxxx"},
+                {question: "xxxxxx", answer: "xxxxxxxx"},
+            ] 
+        },
+        "Deck #5": { 
+            name: "Deck #5", 
+            cards: [
+                {question: "xxxxxx", answer: "xxxxxxxx"},
+                {question: "xxxxxx", answer: "xxxxxxxx"},
+                {question: "xxxxxx", answer: "xxxxxxxx"},
+            ] 
+        },
+    }
     render() {
+
+        const deckKeys = Object.keys(this.decks)
+
         const { entries } = this.props
         const { ready } = this.state
 
@@ -64,17 +111,26 @@ class History extends Component {
             return <AppLoading />
         }
 
-        return (
-            <View style={styles.center}>
-                {/* <TextButton style={{ marginTop: 17, padding: 10, fontSize: 24 }} onPress={() => console.log('Pressed!')}> */}
-                <TextButton style={{ marginTop: 17, padding: 10, fontSize: 24 }} onPress={() => this.props.navigation.navigate(
-                    'DeckDetail'
-                )}>
-                        Deck 1
-                </TextButton>                
-                <Text style={styles.center}>3 cards</Text>
-            </View>
+        const deckList = deckKeys.map((key) => {
+            return (
+                <View key={key}>
+                    <TextButton style={{ fontSize: 24 }} onPress={() => this.props.navigation.navigate(
+                        'DeckDetail',
+                        {entryId: key}
+                    )}>
+                    {this.decks[key].name}    
+                    </TextButton>     
+                    <Text style={{ textAlign: 'center' }}>{this.decks[key].cards.length} cards</Text>                    
+                </View>
+            )
+        })
 
+        return (
+            <ScrollView>
+                <View>
+                    {deckList}
+                </View>
+            </ScrollView>
         )
     }
 }
@@ -107,6 +163,13 @@ const styles = StyleSheet.create({
         alignItems: "center",
         marginLeft: 30,
         marginRight: 30
+    },
+    // main: {
+    //         flexDirection: 'column',
+    //         marginTop: 12
+    //     },
+    container: {
+        flex: 1,
     }
 })
 

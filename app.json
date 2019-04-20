@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "UdaciFirness",
-    "slug": "UdaciFitness",
+    "name": "MobileFlashCards",
+    "slug": "mobileflashcards",
     "privacy": "public",
     "sdkVersion": "32.0.0",
     "platforms": [

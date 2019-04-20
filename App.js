@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Platform, StatusBar } from 'react-native'
-import AddEntry from './components/addentry'
+// import AddEntry from './components/addentry'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './reducers'
@@ -10,6 +10,8 @@ import { purple, white } from './utils/colors'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { Constants } from 'expo'
 import DeckDetail from './components/deckdetail'
+import AddCard from './components/addcard'
+import AddDeck from './components/adddeck'
 
 function UdaciStatusBar({ backgroundColor, ...props }) {
   return (
@@ -28,7 +30,7 @@ const Tabs = createAppContainer(createBottomTabNavigator({
     },
   },
   AddEntry: {
-    screen: AddEntry,
+    screen: AddDeck,
     navigationOptions: {
       tabBarLabel: 'Add Deck',
       tabBarIcon: ({ tintColor }) => <FontAwesome name='plus-square' size={30} color={tintColor} />
@@ -66,7 +68,17 @@ const Tabs = createAppContainer(createBottomTabNavigator({
           backgroundColor: purple,
         }
       }
-    }
+    },
+    AddCard: {
+      screen: AddCard,
+      navigationOptions: {
+        title: 'Add Card',
+        headerTintColor: white,
+        headerStyle: {
+          backgroundColor: purple,
+        }
+      }
+    },
   }))
 
 export default class App extends React.Component {
