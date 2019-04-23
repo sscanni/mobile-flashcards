@@ -2,13 +2,10 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet, Platform, TouchableOpacity, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import { receiveEntries, addEntry } from '../actions'
-import { timeToString, getDailyReminderValue } from '../utils/helpers'
 import { fetchCalendarResults } from '../utils/api'
-//import UdaciFitnessCalendar from 'udacifitness-calendar'
 import { white } from '../utils/colors'
-import DateHeader from './dateheader'
-import MetricCard from './metriccard'
 import { AppLoading } from 'expo'
+import { AsyncStorage } from 'react-native'
 
 import TextButton from "./textbutton";
 
@@ -19,98 +16,69 @@ class History extends Component {
     componentDidMount() {
         const { dispatch } = this.props
 
+        AsyncStorage.clear();    //Temp line for testing
+
         fetchCalendarResults()
             .then((entries) => dispatch(receiveEntries(entries)))
-            .then(({ entries }) => {
-                if (!entries[timeToString()]) {
-                    dispatch(addEntry({
-                        [timeToString()]: getDailyReminderValue()
-                    }))
-                }
-            })
+            // .then(({ entries }) => {
+            //     if (!entries[timeToString()]) {
+            //         dispatch(addEntry({
+            //             [timeToString()]: getDailyReminderValue()
+            //         }))
+            //     }
+            // })
             .then(() => this.setState(() => ({ ready: true })))
     }
-    renderItem = ({ today, ...metrics }, formattedDate, key) => (
-        <View style={styles.item}>
-            {today
-                ? <View>
-                    <DateHeader date={formattedDate} />
-                    <Text style={styles.noDataText}>
-                        {today}
-                    </Text>
-                </View>
-                : <TouchableOpacity
-                    onPress={() => console.log('Pressed!')}
-                >
-                    <MetricCard date={formattedDate} metrics={metrics} />
-                </TouchableOpacity>}
-        </View>
-    )
-    renderEmptyDate(formattedDate) {
-        return (
-            <View style={styles.item}>
-                <DateHeader date={formattedDate} />
-                <Text style={styles.noDataText}>
-                    You didn't log any data on this day.
-        </Text>
-            </View>
-        )
-    }
+    // renderItem = ({ today, ...metrics }, formattedDate, key) => (
+    //     <View style={styles.item}>
+    //         {today
+    //             ? <View>
+    //                 <DateHeader date={formattedDate} />
+    //                 <Text style={styles.noDataText}>
+    //                     {today}
+    //                 </Text>
+    //             </View>
+    //             : <TouchableOpacity
+    //                 onPress={() => console.log('Pressed!')}
+    //             >
+    //                 <MetricCard date={formattedDate} metrics={metrics} />
+    //             </TouchableOpacity>}
+    //     </View>
+    // )
+    // renderEmptyDate(formattedDate) {
+    //     return (
+    //         <View style={styles.item}>
+    //             <DateHeader date={formattedDate} />
+    //             <Text style={styles.noDataText}>
+    //                 You didn't log any data on this day.
+    //     </Text>
+    //         </View>
+    //     )
+    // }
 
-    decks = {
-        "Deck #1": { 
-            name: "Deck #1", 
-            cards: [
-                {question: "xxxxxx", answer: "xxxxxxxx"},
-                {question: "xxxxxx", answer: "xxxxxxxx"},
-                {question: "xxxxxx", answer: "xxxxxxxx"},
-            ] 
-        },
-        "Deck #2": { 
-            name: "Deck #2", 
-            cards: [
-                {question: "xxxxxx", answer: "xxxxxxxx"},
-                {question: "xxxxxx", answer: "xxxxxxxx"},
-                {question: "xxxxxx", answer: "xxxxxxxx"},
-                {question: "xxxxxx", answer: "xxxxxxxx"},
-                {question: "xxxxxx", answer: "xxxxxxxx"},
-            ] 
-        },
-        "Deck #3": { 
-            name: "Deck #3", 
-            cards: [
-                {question: "xxxxxx", answer: "xxxxxxxx"},
-            ] 
-        },
-        "Deck #4": { 
-            name: "Deck #4", 
-            cards: [
-                {question: "xxxxxx", answer: "xxxxxxxx"},
-                {question: "xxxxxx", answer: "xxxxxxxx"},
-                {question: "xxxxxx", answer: "xxxxxxxx"},
-                {question: "xxxxxx", answer: "xxxxxxxx"},
-            ] 
-        },
-        "Deck #5": { 
-            name: "Deck #5", 
-            cards: [
-                {question: "xxxxxx", answer: "xxxxxxxx"},
-                {question: "xxxxxx", answer: "xxxxxxxx"},
-                {question: "xxxxxx", answer: "xxxxxxxx"},
-            ] 
-        },
-    }
     render() {
 
-        const deckKeys = Object.keys(this.decks)
+        debugger
 
+        // const decks = getDecks()  // Now getting decks from async storage
+        
         const { entries } = this.props
         const { ready } = this.state
+
+        const deckKeys = Object.keys(entries)
+
+        // console.log("entries=", entries)
 
         if (ready === false) {
             return <AppLoading />
         }
-
+        if (deckKeys.length === 0) {
+            return  (
+                <View>
+                    <Text style={{ textAlign: 'center', fontSize: 24 }}>No Decks Found</Text> 
+                </View>
+            )
+        }
         const deckList = deckKeys.map((key) => {
             return (
                 <View key={key}>
@@ -118,9 +86,9 @@ class History extends Component {
                         'DeckDetail',
                         {entryId: key}
                     )}>
-                    {this.decks[key].name}    
+                    {entries[key].name}    
                     </TextButton>     
-                    <Text style={{ textAlign: 'center' }}>{this.decks[key].cards.length} cards</Text>                    
+                    <Text style={{ textAlign: 'center' }}>{entries[key].cards.length} cards</Text>                    
                 </View>
             )
         })

@@ -1,30 +1,45 @@
 import React, { Component } from 'react'
+import { connect } from "react-redux";
 import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native'
 import { white, red } from '../utils/colors'
 import { bold } from 'ansi-colors';
+import { delDeck } from '../utils/decks'
 
 class DeckDetail extends Component {
     
-    addButton = () => {
+    delButton = () => {
 
-        console.log("Add Card Pressed:")
-        
+        const { entryId } = this.props.navigation.state.params;
+
+        console.log("delButton key=:", entryId)
+
+        delDeck(entryId)
+
+        // Route to Home
         this.props.navigation.navigate(
-            'AddCard')
-    
+            'History')
+
     };
     render() {
+
+    const key = this.props.navigation.state.params.entryId
+
+    const { entries } = this.props
+
     return (
         <View style={{alignItems: 'center'}}>
-            <Text style={{ textAlign: 'center', marginTop: 60, fontSize: 24 }}>Deck Detail - { this.props.navigation.state.params.entryId }</Text>
-            <Text style={{ textAlign: 'center', paddingTop: 10 }}>3 cards</Text>
-            <TouchableOpacity style={styles.Addbtn} onPress={this.addButton}>
+            <Text style={{ textAlign: 'center', marginTop: 60, fontSize: 24 }}>Deck Detail - { entries[key].name }</Text>
+            <Text style={{ textAlign: 'center', paddingTop: 10 }}>{entries[key].cards.length} cards</Text>
+            <TouchableOpacity style={styles.Addbtn} onPress={() => this.props.navigation.navigate(
+                        'AddCard',
+                        {entryId: key}
+                    )}>
                 <Text>Add Card</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.Addbtn} onPress={() => console.log('Pressed!')}>
                 <Text>Start Quiz</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.Deletebtn} onPress={() => console.log('Pressed!')}>
+            <TouchableOpacity style={styles.Deletebtn} onPress={this.delButton}>
                 <Text style={{ fontSize: 24, color: red }}>Delete Deck</Text>
             </TouchableOpacity>
         </View>
@@ -59,4 +74,11 @@ const styles = StyleSheet.create({
         alignItems: 'center'
         },
     })
-export default DeckDetail
+    function mapStateToProps(entries, props) {
+        return {
+            entries,
+        }
+    }
+                        
+    export default connect(mapStateToProps)(DeckDetail);
+

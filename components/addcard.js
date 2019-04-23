@@ -1,22 +1,34 @@
 import React, { Component } from 'react'
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Platform } from 'react-native'
+import { connect } from "react-redux";
 import { white, red } from '../utils/colors'
 import { bold } from 'ansi-colors';
+import { formatCard } from '../utils/decks'
+import { addCard } from "../actions";
 
 class AddCard extends Component {
 
-    state = { text: '' };
-
+    state = {
+        question: '',
+        answer: ''
+    };
     addButton = () => {
 
+        const { entryId } = this.props.navigation.state.params;
+
+        console.log("AddCard key=:", entryId)
         console.log("Question Submitted:", this.state.question)
         console.log("Answer Submitted:", this.state.answer)
-        
-        // this.props.dispatch(
-        //     addEntry({
-        //         [key]: getDailyReminderValue()
-        //     })
-        // );
+
+        entry = formatCard(entryId, this.state.question, this.state.answer)
+
+        console.log("addButton entry=:", entry)
+
+        this.props.dispatch(
+            addCard({
+                newCard: entry
+            })
+        );
 
         //Clear out text
         this.setState(() => ({
@@ -31,29 +43,36 @@ class AddCard extends Component {
     };
 
     render() {
-    return (
-        <View style={{alignItems: 'center'}}>
-            {/* <Text style={{ textAlign: 'center', marginTop: 30, fontSize: 14 }}>Question</Text> */}
-            <TextInput style={styles.input}
-                    onChangeText={(question) => this.setState({question})}
+
+        const key = this.props.navigation.state.params.entryId
+
+        const { entries } = this.props
+
+        return (
+            <View style={{ alignItems: 'center' }}>
+                <Text>{key}</Text>
+                <Text>{entries[key].name}</Text>
+                {/* <Text style={{ textAlign: 'center', marginTop: 30, fontSize: 14 }}>Question</Text> */}
+                <TextInput style={styles.input}
+                    onChangeText={(question) => this.setState({ question })}
                     value={this.state.question}
-            ></TextInput>
-            {/* <Text style={{ textAlign: 'center', marginTop: 30, fontSize: 14 }}>Answer</Text> */}
-            <TextInput style={styles.input}
-                    onChangeText={(answer) => this.setState({answer})}
+                ></TextInput>
+                {/* <Text style={{ textAlign: 'center', marginTop: 30, fontSize: 14 }}>Answer</Text> */}
+                <TextInput style={styles.input}
+                    onChangeText={(answer) => this.setState({ answer })}
                     value={this.state.answer}
-            ></TextInput>
-            <TouchableOpacity style={styles.Addbtn} onPress={this.addButton}>
-                <Text>Create Card</Text>
-            </TouchableOpacity>
-        </View>
+                ></TextInput>
+                <TouchableOpacity style={styles.Addbtn} onPress={this.addButton}>
+                    <Text>Create Card</Text>
+                </TouchableOpacity>
+            </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
     Addbtn: {
-        textAlign: 'center', 
+        textAlign: 'center',
         width: 200,
         height: 50,
         borderWidth: 2,
@@ -66,9 +85,9 @@ const styles = StyleSheet.create({
         margin: 60,
         justifyContent: 'center',
         alignItems: 'center'
-        },
+    },
     Deletebtn: {
-        textAlign: 'center', 
+        textAlign: 'center',
         borderWidth: 0,
         color: red,
         borderRadius: Platform.OS === 'ios' ? 16 : 2,
@@ -77,14 +96,21 @@ const styles = StyleSheet.create({
         marginTop: 60,
         justifyContent: 'center',
         alignItems: 'center'
-        },
+    },
     input: {
-        width: 300, 
+        width: 300,
         height: 44,
         // padding: 8,
         borderWidth: 1,
         borderColor: '#757575',
         margin: 20,
-        },        
-    })
-export default AddCard
+    },
+})
+
+function mapStateToProps(entries, props) {
+    return {
+        entries,
+    }
+}
+
+export default connect(mapStateToProps)(AddCard);

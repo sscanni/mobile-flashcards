@@ -2,6 +2,10 @@ import React, { Component } from 'react'
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Platform } from 'react-native'
 import { white, red } from '../utils/colors'
 import { bold } from 'ansi-colors';
+import { addDeck } from '../utils/decks'
+import { connect } from "react-redux";
+import { addEntry } from "../actions";
+import { submitEntry, removeEntry } from "../utils/api";
 
 class AddDeck extends Component {
 
@@ -9,13 +13,21 @@ class AddDeck extends Component {
 
     addButton = () => {
 
-        console.log("Submit Pressed:", this.state.text)
+        deckName = this.state.text
+
+        console.log("Submit Pressed:", deckName)
+
+        entry = addDeck(deckName)
+
+        submitEntry({ deckName, entry });
         
-        // this.props.dispatch(
-        //     addEntry({
-        //         [key]: getDailyReminderValue()
-        //     })
-        // );
+        this.props.dispatch(
+            addEntry({
+                [deckName]: entry
+            })
+        );
+
+        console.log("After addDeck call")
 
         //Clear out text
         this.setState(() => ({
@@ -86,4 +98,9 @@ const styles = StyleSheet.create({
         margin: 40,
         },        
     })
-export default AddDeck
+
+    function mapStateToProps(props) {
+        return {}
+    }
+                        
+    export default connect(mapStateToProps)(AddDeck);
