@@ -7,9 +7,11 @@ export function fetchCalendarResults() {
         .then(formatCalendarResults)
 }
 
-export function submitEntry({ entry, key }) {
+export function submitEntry(entry, deckName ) {
+    console.log("submitEntry: entry: ", entry)
+    console.log("submitEntry: deckName: ", deckName)
     return AsyncStorage.mergeItem(CALENDAR_STORAGE_KEY, JSON.stringify({
-        [key]: entry
+        [deckName]: entry
     }))
 }
 

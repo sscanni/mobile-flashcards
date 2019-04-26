@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Platform } from 'react-native'
 import { white, red } from '../utils/colors'
 import { bold } from 'ansi-colors';
-import { addDeck } from '../utils/decks'
+import { formatDeck } from '../utils/decks'
 import { connect } from "react-redux";
 import { addEntry } from "../actions";
 import { submitEntry, removeEntry } from "../utils/api";
@@ -15,11 +15,9 @@ class AddDeck extends Component {
 
         deckName = this.state.text
 
-        console.log("Submit Pressed:", deckName)
+        entry = formatDeck(deckName)
 
-        entry = addDeck(deckName)
-
-        submitEntry({ deckName, entry });
+        submitEntry( entry, deckName );
         
         this.props.dispatch(
             addEntry({
@@ -27,7 +25,7 @@ class AddDeck extends Component {
             })
         );
 
-        console.log("After addDeck call")
+        // console.log("After addDeck call")
 
         //Clear out text
         this.setState(() => ({

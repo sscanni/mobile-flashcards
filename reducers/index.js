@@ -1,6 +1,7 @@
 import { RECEIVE_ENTRIES, ADD_ENTRY, ADD_CARD } from '../actions'
 
 function entries(state = {}, action) {
+    console.log("reducer: action.entry=", action.entry)
     switch (action.type) {
         case RECEIVE_ENTRIES:
             return {
@@ -13,16 +14,13 @@ function entries(state = {}, action) {
                 ...action.entry
             }
         case ADD_CARD:
-            console.log("ADD_CARD: action.entry=", action.entry)
-            console.log("ADD_CARD: action.entry.newCard.name=", action.entry.newCard.name)
-            console.log("ADD_CARD: action.entry.newCard.cards.question=", action.entry.newCard.cards.question)
-            console.log("ADD_CARD: action.entry.newCard.cards.answer=", action.entry.newCard.cards.answer)
-
             return {
                 ...state,
-                ...state[action.entry.newCard.name],
-                ...action.entry.newCard.cards
+                [action.entry.entry.name] : {
+                name: action.entry.entry.name,
+                cards: state[action.entry.entry.name].cards.concat([action.entry.entry.cards])
                 }
+            }
         default:
             return state
     }

@@ -4,6 +4,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native
 import { white, red } from '../utils/colors'
 import { bold } from 'ansi-colors';
 import { delDeck } from '../utils/decks'
+import { receiveEntries } from "../actions";
 
 class DeckDetail extends Component {
     
@@ -11,9 +12,11 @@ class DeckDetail extends Component {
 
         const { entryId } = this.props.navigation.state.params;
 
-        console.log("delButton key=:", entryId)
+        const { entries } = this.props
 
-        delDeck(entryId)
+        newEntries = delDeck(entryId, entries)
+
+        this.props.dispatch(receiveEntries(newEntries))
 
         // Route to Home
         this.props.navigation.navigate(
@@ -25,6 +28,10 @@ class DeckDetail extends Component {
     const key = this.props.navigation.state.params.entryId
 
     const { entries } = this.props
+
+    if (entries[key] == null) {
+        return null
+    }
 
     return (
         <View style={{alignItems: 'center'}}>

@@ -5,6 +5,7 @@ import { white, red } from '../utils/colors'
 import { bold } from 'ansi-colors';
 import { formatCard } from '../utils/decks'
 import { addCard } from "../actions";
+import { submitEntry, removeEntry } from "../utils/api";
 
 class AddCard extends Component {
 
@@ -16,19 +17,29 @@ class AddCard extends Component {
 
         const { entryId } = this.props.navigation.state.params;
 
-        console.log("AddCard key=:", entryId)
-        console.log("Question Submitted:", this.state.question)
-        console.log("Answer Submitted:", this.state.answer)
-
         entry = formatCard(entryId, this.state.question, this.state.answer)
 
-        console.log("addButton entry=:", entry)
+        console.log("addButton: entry=", entry)
 
         this.props.dispatch(
             addCard({
-                newCard: entry
+                entry
             })
         );
+
+        const { entries } = this.props
+
+        //console.log("addcard: entries=", entries)
+
+        tempEntries = entries
+
+        //console.log("addcard: entry.cards=", entry.cards)
+
+        tempEntries[entryId].cards = tempEntries[entryId].cards.concat([entry.cards])
+
+        //console.log("addcard: tempEntries=", tempEntries[entryId])
+
+        submitEntry(tempEntries[entryId], entryId);
 
         //Clear out text
         this.setState(() => ({

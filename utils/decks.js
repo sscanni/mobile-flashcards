@@ -48,53 +48,45 @@ const decks = {
     },
 }
 
-// export default function getDecks() {
-//     console.log("return decks")
-//     return decks
-// }
+export function formatDeck(name) {
 
-// export function addDeck(name) {
+    deck = {
+        name: name,
+        cards: []
+    }
+    return deck
+}
+export function formatCard(deckName, question, answer) {
 
-//     // console.log("addDeck key=", name);
-
-//     deck =
-//         {
-//             name: name,
-//             cards: []
-//         }
-
-//     decks = {
-//         ...decks, [name]: deck
-//     }
-
-//     return deck
-
-//     console.log("addDeck decks=", decks);
-
-//     // keys = Object.keys(decks)
-//     // keys.map((key) => {
-//     //     console.log("addDeck name=", decks[key].name);
-//     //     console.log("addDeck name=", decks[key].cards.length);
-//     // })
-
-// }
-export function delDeck(name) {
-    delete decks[name]
+    return {name: deckName,
+            cards: { question: question, answer: answer }} 
 }
 
-// export function addCard (key, question, answer) {
+// export function formatCard (deckName, question, answer) {
 
 //     const newCard = {"quesion": question, "answer": answer}
 
-//     decks[key].cards = [
-//         ...decks[key].cards,
+//     decks[deckName].cards = [
+//         ...decks[deckName].cards,
 //         newCard
 //     ]
-
 //     // decks[key].cards.map((card) => {
 //     //     console.log("addDeck card=", card);
 //     // })
 // }
+export function delDeck(entryId, entries) {
+
+    console.log("delDeck entryId=", entryId)
+    console.log("delDeck entries=", entries)
+
+    delete entries[entryId]
+    
+    AsyncStorage.setItem(CALENDAR_STORAGE_KEY, JSON.stringify(entries))
+
+    console.log("delDeck after delete: entries=", entries)
+
+    return entries
+}
 
 function setDummyData() {
 
@@ -109,11 +101,6 @@ export function formatCalendarResults(results) {
     console.log("formatCalendarResults: results=", results)
     return results === null
         ? setDummyData()
-        : results
+        : JSON.parse(results)
 }
 
-export function formatCard(entryId, question, answer) {
-
-    return {name: entryId,
-            cards: { question: question, answer: answer }} 
-}

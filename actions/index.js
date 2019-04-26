@@ -1,3 +1,4 @@
+
 export const RECEIVE_ENTRIES = 'RECEIVE_ENTRIES'
 export const ADD_ENTRY = 'ADD_ENTRY'
 export const ADD_CARD = 'ADD_CARD'
@@ -17,7 +18,6 @@ export function addEntry(entry) {
 }
 
 export function addCard(entry) {
-    // console.log("addCard: entry=", entry)
     return {
         type: ADD_CARD,
         entry

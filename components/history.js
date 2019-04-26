@@ -16,10 +16,13 @@ class History extends Component {
     componentDidMount() {
         const { dispatch } = this.props
 
-        AsyncStorage.clear();    //Temp line for testing
+        //AsyncStorage.clear();    //Temp line for testing
 
         fetchCalendarResults()
             .then((entries) => dispatch(receiveEntries(entries)))
+                .then(({ entries }) => {
+                    console.log("componentDidMount entries=", entries)
+            })
             // .then(({ entries }) => {
             //     if (!entries[timeToString()]) {
             //         dispatch(addEntry({
@@ -67,8 +70,8 @@ class History extends Component {
 
         const deckKeys = Object.keys(entries)
 
-        // console.log("entries=", entries)
-
+        //console.log("History: entries=", entries)
+        
         if (ready === false) {
             return <AppLoading />
         }
