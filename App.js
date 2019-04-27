@@ -12,6 +12,8 @@ import { Constants } from 'expo'
 import DeckDetail from './components/deckdetail'
 import AddCard from './components/addcard'
 import AddDeck from './components/adddeck'
+import Quiz from './components/quiz'
+import QuizResults from './components/quizresults'
 
 function UdaciStatusBar({ backgroundColor, ...props }) {
   return (
@@ -74,6 +76,27 @@ const Tabs = createAppContainer(createBottomTabNavigator({
       navigationOptions: {
         title: 'Add Card',
         headerTintColor: white,
+        headerStyle: {
+          backgroundColor: purple,
+        }
+      }
+    },
+    Quiz: {
+      screen: Quiz,
+      navigationOptions: {
+        title: 'Quiz',
+        headerTintColor: white,
+        headerStyle: {
+          backgroundColor: purple,
+        }
+      }
+    },
+    QuizResults: {
+      screen: QuizResults,
+      navigationOptions: {
+        title: 'Quiz Results',
+        headerTintColor: white,
+        headerLeft: null,
         headerStyle: {
           backgroundColor: purple,
         }

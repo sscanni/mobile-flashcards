@@ -23,6 +23,7 @@ class DeckDetail extends Component {
             'History')
 
     };
+
     render() {
 
     const key = this.props.navigation.state.params.entryId
@@ -43,7 +44,10 @@ class DeckDetail extends Component {
                     )}>
                 <Text>Add Card</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.Addbtn} onPress={() => console.log('Pressed!')}>
+            <TouchableOpacity style={styles.Addbtn} onPress={() => this.props.navigation.navigate(
+                        'Quiz',
+                        {entryId: key}
+                    )}>
                 <Text>Start Quiz</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.Deletebtn} onPress={this.delButton}>
