@@ -15,6 +15,13 @@ class AddDeck extends Component {
 
         deckName = this.state.text
 
+        //Do not allow blank Deck names
+        if (deckName.trim() === '' || deckName.trim() === null) {
+            this.props.navigation.navigate(
+                'History')
+            return
+        }
+
         entry = formatDeck(deckName)
 
         submitEntry( entry, deckName );
@@ -24,8 +31,6 @@ class AddDeck extends Component {
                 [deckName]: entry
             })
         );
-
-        // console.log("After addDeck call")
 
         //Clear out text
         this.setState(() => ({
@@ -67,9 +72,7 @@ const styles = StyleSheet.create({
         width: 200,
         height: 50,
         borderWidth: 2,
-        // backgroundColor: white,
         borderRadius: Platform.OS === 'ios' ? 16 : 2,
-        // padding: 20,
         marginLeft: 10,
         marginRight: 10,
         marginTop: 60,

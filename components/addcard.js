@@ -15,6 +15,14 @@ class AddCard extends Component {
     };
     addButton = () => {
 
+        //Do not allow blank Questions or Answers
+        if (this.state.question.trim() === '' ||  this.state.question.trim() === null ||
+            this.state.answer.trim() === '' ||  this.state.answer.trim() === null) {
+            this.props.navigation.navigate(
+                'DeckDetail')
+            return
+        }
+
         const { entryId } = this.props.navigation.state.params;
 
         entry = formatCard(entryId, this.state.question, this.state.answer)
@@ -29,15 +37,9 @@ class AddCard extends Component {
 
         const { entries } = this.props
 
-        //console.log("addcard: entries=", entries)
-
         tempEntries = entries
 
-        //console.log("addcard: entry.cards=", entry.cards)
-
         tempEntries[entryId].cards = tempEntries[entryId].cards.concat([entry.cards])
-
-        //console.log("addcard: tempEntries=", tempEntries[entryId])
 
         submitEntry(tempEntries[entryId], entryId);
 
@@ -47,7 +49,7 @@ class AddCard extends Component {
             answer: ''
         }))
 
-        // Route to Home
+        // Route to Deck Detail
         this.props.navigation.navigate(
             'DeckDetail')
 

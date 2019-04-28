@@ -1,6 +1,5 @@
 import React from 'react'
 import { View, Platform, StatusBar } from 'react-native'
-// import AddEntry from './components/addentry'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './reducers'
@@ -13,7 +12,6 @@ import DeckDetail from './components/deckdetail'
 import AddCard from './components/addcard'
 import AddDeck from './components/adddeck'
 import Quiz from './components/quiz'
-import QuizResults from './components/quizresults'
 
 function UdaciStatusBar({ backgroundColor, ...props }) {
   return (
@@ -86,17 +84,6 @@ const Tabs = createAppContainer(createBottomTabNavigator({
       navigationOptions: {
         title: 'Quiz',
         headerTintColor: white,
-        headerStyle: {
-          backgroundColor: purple,
-        }
-      }
-    },
-    QuizResults: {
-      screen: QuizResults,
-      navigationOptions: {
-        title: 'Quiz Results',
-        headerTintColor: white,
-        headerLeft: null,
         headerStyle: {
           backgroundColor: purple,
         }

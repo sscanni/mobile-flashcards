@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux";
 import { View, Text, StyleSheet, Platform, TouchableOpacity, Switch } from 'react-native'
-import { white, red, black } from '../utils/colors'
+import { red, black } from '../utils/colors'
 
 class Quiz extends Component {
 
@@ -9,7 +9,9 @@ class Quiz extends Component {
         question: true,
         card: 0,
         answerSel: "",
-        correctCount: 0
+        correctCount: 0,
+        results: false
+
     };
     answerButton = () => {
 
@@ -52,13 +54,10 @@ class Quiz extends Component {
 
         this.setState(() => ({
             question: false,
-            correctCount: cnt
+            correctCount: cnt,
+            results: true
         }));
 
-        console.log("viewResults: correctCount=", cnt)
-
-        this.props.navigation.navigate(
-            'QuizResults', {entryId: key, correctCount: cnt})
     };
     toggleYesButton = () => {
 
@@ -79,6 +78,26 @@ class Quiz extends Component {
         const key = this.props.navigation.state.params.entryId
 
         const { entries } = this.props
+
+        if (this.state.results) {
+            return (
+                <View style={{alignItems: 'center'}}>
+                    <Text  style={{ textAlign: 'center', marginTop: 60, fontSize: 24 }}>Quiz Results</Text>
+                    <Text  style={{ textAlign: 'center', marginTop: 60, fontSize: 24 }}>{this.state.correctCount} out of {entries[key].cards.length} correct</Text>
+                    <TouchableOpacity style={styles.Addbtn} onPress={() => this.props.navigation.push(
+                                        'Quiz',
+                                        {entryId: key}
+                                        )}>
+                        <Text style={{ fontSize: 16 }}>Restart Quiz</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.Addbtn} onPress={() => this.props.navigation.navigate(
+                                        'History'
+                                        )}>
+                        <Text style={{ fontSize: 16 }}>Back to Deck</Text>
+                    </TouchableOpacity>
+                </View>
+            )
+        }
 
         return (
             <View style={{ alignItems: 'center' }}>
@@ -135,9 +154,7 @@ const styles = StyleSheet.create({
         width: 200,
         height: 50,
         borderWidth: 2,
-        // backgroundColor: white,
         borderRadius: Platform.OS === 'ios' ? 16 : 2,
-        // padding: 20,
         marginLeft: 10,
         marginRight: 10,
         marginTop: 60,
