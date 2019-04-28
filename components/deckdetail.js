@@ -76,7 +76,9 @@ class DeckDetail extends Component {
                 <View style={styles.container}>
                     <Animated.Image
                         style={[styles.img, { opacity, width, height }]}
-                        source={{ uri: 'https://tylermcginnis.com/tylermcginnis_glasses-300.png' }}
+                        source={{ uri: 'https://github.com/sscanni/mobile-flashcards/blob/master/assets/logo.jpg' }}
+                        // source={{ uri: 'https://tylermcginnis.com/tylermcginnis_glasses-300.png' }}
+                        
                     />
                 </View>
             )
