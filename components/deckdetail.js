@@ -7,6 +7,20 @@ import { delDeck } from '../utils/decks'
 import { receiveEntries } from "../actions";
 
 class DeckDetail extends Component {
+
+    quizButton = () => {
+
+        const key = this.props.navigation.state.params.entryId
+
+        const { entries } = this.props
+
+        if (entries[key].cards.length > 0) {
+            this.props.navigation.navigate(
+                'Quiz',
+                {entryId: key}
+            )
+        }
+    };
     
     delButton = () => {
 
@@ -20,7 +34,7 @@ class DeckDetail extends Component {
 
         // Route to Home
         this.props.navigation.navigate(
-            'History')
+            'DeckList')
 
     };
 
@@ -44,10 +58,7 @@ class DeckDetail extends Component {
                     )}>
                 <Text>Add Card</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.Addbtn} onPress={() => this.props.navigation.navigate(
-                        'Quiz',
-                        {entryId: key}
-                    )}>
+            <TouchableOpacity style={styles.Addbtn} onPress={this.quizButton}>
                 <Text>Start Quiz</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.Deletebtn} onPress={this.delButton}>

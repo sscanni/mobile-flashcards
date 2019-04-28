@@ -18,7 +18,7 @@ class AddDeck extends Component {
         //Do not allow blank Deck names
         if (deckName.trim() === '' || deckName.trim() === null) {
             this.props.navigation.navigate(
-                'History')
+                'DeckList')
             return
         }
 
@@ -39,7 +39,7 @@ class AddDeck extends Component {
 
         // Route to Home
         this.props.navigation.navigate(
-            'History')
+            'DeckList')
 
     };
 

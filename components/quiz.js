@@ -91,7 +91,7 @@ class Quiz extends Component {
                         <Text style={{ fontSize: 16 }}>Restart Quiz</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.Addbtn} onPress={() => this.props.navigation.navigate(
-                                        'History'
+                                        'DeckList'
                                         )}>
                         <Text style={{ fontSize: 16 }}>Back to Deck</Text>
                     </TouchableOpacity>

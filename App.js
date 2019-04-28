@@ -3,7 +3,7 @@ import { View, Platform, StatusBar } from 'react-native'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './reducers'
-import History from './components/history'
+import DeckList from './components/decklist'
 import { createAppContainer, createBottomTabNavigator, createStackNavigator  } from 'react-navigation'
 import { purple, white } from './utils/colors'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
@@ -22,8 +22,8 @@ function UdaciStatusBar({ backgroundColor, ...props }) {
 }
 
 const Tabs = createAppContainer(createBottomTabNavigator({
-  History: {
-    screen: History,
+  DeckList: {
+    screen: DeckList,
     navigationOptions: {
       tabBarLabel: 'Decks',
       tabBarIcon: ({ tintColor }) => <Ionicons name='ios-bookmarks' size={30} color={tintColor} />

@@ -9,7 +9,7 @@ import { AsyncStorage } from 'react-native'
 
 import TextButton from "./textbutton";
 
-class History extends Component {
+class DeckList extends Component {
     state = {
         ready: false,
     }
@@ -23,41 +23,8 @@ class History extends Component {
                 .then(({ entries }) => {
                     console.log("componentDidMount entries=", entries)
             })
-            // .then(({ entries }) => {
-            //     if (!entries[timeToString()]) {
-            //         dispatch(addEntry({
-            //             [timeToString()]: getDailyReminderValue()
-            //         }))
-            //     }
-            // })
             .then(() => this.setState(() => ({ ready: true })))
     }
-    // renderItem = ({ today, ...metrics }, formattedDate, key) => (
-    //     <View style={styles.item}>
-    //         {today
-    //             ? <View>
-    //                 <DateHeader date={formattedDate} />
-    //                 <Text style={styles.noDataText}>
-    //                     {today}
-    //                 </Text>
-    //             </View>
-    //             : <TouchableOpacity
-    //                 onPress={() => console.log('Pressed!')}
-    //             >
-    //                 <MetricCard date={formattedDate} metrics={metrics} />
-    //             </TouchableOpacity>}
-    //     </View>
-    // )
-    // renderEmptyDate(formattedDate) {
-    //     return (
-    //         <View style={styles.item}>
-    //             <DateHeader date={formattedDate} />
-    //             <Text style={styles.noDataText}>
-    //                 You didn't log any data on this day.
-    //     </Text>
-    //         </View>
-    //     )
-    // }
 
     render() {
 
@@ -153,4 +120,4 @@ function mapStateToProps(entries) {
 
 export default connect(
     mapStateToProps,
-)(History)
+)(DeckList)
