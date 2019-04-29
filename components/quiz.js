@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from "react-redux";
 import { View, Text, StyleSheet, Platform, TouchableOpacity, Switch } from 'react-native'
 import { red, black } from '../utils/colors'
+import { setLocalNotification, clearLocalNotification } from '../utils/helpers';
 
 class Quiz extends Component {
 
@@ -58,6 +59,9 @@ class Quiz extends Component {
             results: true
         }));
 
+        clearLocalNotification()
+            .then(setLocalNotification)
+
     };
     toggleYesButton = () => {
 
@@ -82,8 +86,8 @@ class Quiz extends Component {
         if (this.state.results) {
             return (
                 <View style={{alignItems: 'center'}}>
-                    <Text  style={{ textAlign: 'center', marginTop: 60, fontSize: 24 }}>Quiz Results</Text>
-                    <Text  style={{ textAlign: 'center', marginTop: 60, fontSize: 24 }}>{this.state.correctCount} out of {entries[key].cards.length} correct</Text>
+                    <Text  style={{ textAlign: 'center', marginTop: 60, fontSize: 18 }}>Quiz Results</Text>
+                    <Text  style={{ textAlign: 'center', marginTop: 60, fontSize: 18 }}>{this.state.correctCount} out of {entries[key].cards.length} correct</Text>
                     <TouchableOpacity style={styles.Addbtn} onPress={() => this.props.navigation.push(
                                         'Quiz',
                                         {entryId: key}
@@ -103,17 +107,17 @@ class Quiz extends Component {
             <View style={{ alignItems: 'center' }}>
                 {this.state.question === true ? (
                     <View style={{ alignItems: 'center' }}>
-                        <Text style={{ textAlign: 'center', marginTop: 60, fontSize: 24 }}>Question# {this.state.card + 1} of {entries[key].cards.length}</Text>
-                        <Text style={{ textAlign: 'center', marginTop: 60, fontSize: 24 }}>{entries[key].cards[this.state.card].question}?</Text>
+                        <Text style={{ textAlign: 'center', marginTop: 40, fontSize: 24 }}>Question# {this.state.card + 1} of {entries[key].cards.length}</Text>
+                        <Text style={{ textAlign: 'center', marginTop: 40, fontSize: 24 }}>{entries[key].cards[this.state.card].question}?</Text>
                         <TouchableOpacity style={styles.Addbtn} onPress={this.answerButton}>
                             <Text style={{ fontSize: 16 }}>See Answer</Text>
                         </TouchableOpacity>
                     </View>
                 ) : (
                         <View style={{ alignItems: 'center' }}>
-                            <Text style={{ textAlign: 'center', marginTop: 60, fontSize: 24 }}>Answer# {this.state.card + 1} of {entries[key].cards.length}</Text>
-                            <Text style={{ textAlign: 'center', marginTop: 60, fontSize: 24 }}>{entries[key].cards[this.state.card].answer}</Text>
-                            <Text style={{ textAlign: 'center', fontSize: 18, marginTop: 60, }}>Answered Correctly?</Text>
+                            <Text style={{ textAlign: 'center', marginTop: 40, fontSize: 24 }}>Answer# {this.state.card + 1} of {entries[key].cards.length}</Text>
+                            <Text style={{ textAlign: 'center', marginTop: 40, fontSize: 24 }}>{entries[key].cards[this.state.card].answer}</Text>
+                            <Text style={{ textAlign: 'center', fontSize: 18, marginTop: 30, }}>Answered Correctly?</Text>
 
                             <TouchableOpacity onPress={this.toggleYesButton}>
                                 {this.state.answerSel === "yes" ? (
@@ -131,9 +135,9 @@ class Quiz extends Component {
                             </TouchableOpacity>
                             {this.state.card + 1 === entries[key].cards.length ? (
                                 <View style={{ alignItems: 'center' }}>
-                                    <Text style={{ textAlign: 'center', fontSize: 18, marginTop: 60, }}>No more Cards</Text>
+                                    <Text style={{ textAlign: 'center', fontSize: 18, marginTop: 20, }}>No more Cards</Text>
                                     <TouchableOpacity style={styles.Addbtn} onPress={this.viewResults}>
-                                        <Text style={{ fontSize: 16 }}>View Quiz Results</Text>
+                                        <Text style={{ fontSize: 16 }}>View Results</Text>
                                     </TouchableOpacity>
                                 </View>
                             ) : (
@@ -157,18 +161,7 @@ const styles = StyleSheet.create({
         borderRadius: Platform.OS === 'ios' ? 16 : 2,
         marginLeft: 10,
         marginRight: 10,
-        marginTop: 60,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    Deletebtn: {
-        textAlign: 'center',
-        borderWidth: 0,
-        color: red,
-        borderRadius: Platform.OS === 'ios' ? 16 : 2,
-        marginLeft: 10,
-        marginRight: 10,
-        marginTop: 60,
+        marginTop: 30,
         justifyContent: 'center',
         alignItems: 'center'
     },

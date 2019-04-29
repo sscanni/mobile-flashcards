@@ -5,8 +5,6 @@ import { white, red } from '../utils/colors'
 import { bold } from 'ansi-colors';
 import { delDeck } from '../utils/decks'
 import { receiveEntries } from "../actions";
-// import Animated from 'react-native-reanimated';
-import { HeaderStyleInterpolator } from 'react-navigation';
 
 class DeckDetail extends Component {
 
@@ -76,8 +74,8 @@ class DeckDetail extends Component {
                 <View style={styles.container}>
                     <Animated.Image
                         style={[styles.img, { opacity, width, height }]}
-                        source={{ uri: 'https://github.com/sscanni/mobile-flashcards/blob/master/assets/logo.jpg' }}
                         // source={{ uri: 'https://tylermcginnis.com/tylermcginnis_glasses-300.png' }}
+                        source={require('../assets/flashcards.png')} 
                         
                     />
                 </View>
@@ -85,7 +83,7 @@ class DeckDetail extends Component {
         }
         return (
             <View style={{ alignItems: 'center' }}>
-                <Text style={{ textAlign: 'center', marginTop: 60, fontSize: 24 }}>Deck Detail - {entries[key].name}</Text>
+                <Text style={{ textAlign: 'center', marginTop: 40, fontSize: 24 }}>{entries[key].name}</Text>
                 <Text style={{ textAlign: 'center', paddingTop: 10 }}>{entries[key].cards.length} cards</Text>
                 <TouchableOpacity style={styles.Addbtn} onPress={() => this.props.navigation.navigate(
                     'AddCard',
@@ -97,7 +95,7 @@ class DeckDetail extends Component {
                     <Text>Start Quiz</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.Deletebtn} onPress={this.delButton}>
-                    <Text style={{ fontSize: 24, color: red }}>Delete Deck</Text>
+                    <Text style={{ fontSize: 18, color: red }}>Delete Deck</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -115,7 +113,7 @@ const styles = StyleSheet.create({
         // padding: 20,
         marginLeft: 10,
         marginRight: 10,
-        marginTop: 60,
+        marginTop: 40,
         justifyContent: 'center',
         alignItems: 'center'
     },
@@ -126,7 +124,7 @@ const styles = StyleSheet.create({
         borderRadius: Platform.OS === 'ios' ? 16 : 2,
         marginLeft: 10,
         marginRight: 10,
-        marginTop: 60,
+        marginTop: 40,
         justifyContent: 'center',
         alignItems: 'center'
     },

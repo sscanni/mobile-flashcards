@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet, Platform, TouchableOpacity, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import { receiveEntries, addEntry } from '../actions'
-import { fetchCalendarResults } from '../utils/api'
+import { fetchDecks } from '../utils/api'
 import { white } from '../utils/colors'
 import { AppLoading } from 'expo'
 import { AsyncStorage } from 'react-native'
@@ -18,10 +18,10 @@ class DeckList extends Component {
 
         //AsyncStorage.clear();    //Temp line for testing
 
-        fetchCalendarResults()
+        fetchDecks()
             .then((entries) => dispatch(receiveEntries(entries)))
                 .then(({ entries }) => {
-                    console.log("componentDidMount entries=", entries)
+                    //console.log("componentDidMount entries=", entries)
             })
             .then(() => this.setState(() => ({ ready: true })))
     }
@@ -30,14 +30,10 @@ class DeckList extends Component {
 
         debugger
 
-        // const decks = getDecks()  // Now getting decks from async storage
-        
         const { entries } = this.props
         const { ready } = this.state
 
         const deckKeys = Object.keys(entries)
-
-        //console.log("History: entries=", entries)
         
         if (ready === false) {
             return <AppLoading />
@@ -102,10 +98,6 @@ const styles = StyleSheet.create({
         marginLeft: 30,
         marginRight: 30
     },
-    // main: {
-    //         flexDirection: 'column',
-    //         marginTop: 12
-    //     },
     container: {
         flex: 1,
     }

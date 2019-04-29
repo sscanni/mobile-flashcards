@@ -2,7 +2,7 @@
 
 import { AsyncStorage } from 'react-native'
 
-export const CALENDAR_STORAGE_KEY = 'MyFlashCards:decks'
+export const FLASHCARDS_STORAGE_KEY = 'MyFlashCards:decks'
 
 const decks = {
     "Deck #1": {
@@ -62,43 +62,24 @@ export function formatCard(deckName, question, answer) {
             cards: { question: question, answer: answer }} 
 }
 
-// export function formatCard (deckName, question, answer) {
-
-//     const newCard = {"quesion": question, "answer": answer}
-
-//     decks[deckName].cards = [
-//         ...decks[deckName].cards,
-//         newCard
-//     ]
-//     // decks[key].cards.map((card) => {
-//     //     console.log("addDeck card=", card);
-//     // })
-// }
 export function delDeck(entryId, entries) {
-
-    console.log("delDeck entryId=", entryId)
-    console.log("delDeck entries=", entries)
 
     delete entries[entryId]
     
-    AsyncStorage.setItem(CALENDAR_STORAGE_KEY, JSON.stringify(entries))
-
-    console.log("delDeck after delete: entries=", entries)
+    AsyncStorage.setItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(entries))
 
     return entries
 }
 
 function setDummyData() {
 
-    //AsyncStorage.setItem(CALENDAR_STORAGE_KEY, JSON.stringify(dummyData))
-
-    AsyncStorage.setItem(CALENDAR_STORAGE_KEY, JSON.stringify(decks))
-    console.log("setDummyData: decks=", JSON.stringify(decks))
-    return decks
+    // AsyncStorage.setItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(decks))
+    // return decks
+    return null
 }
 
-export function formatCalendarResults(results) {
-    console.log("formatCalendarResults: results=", results)
+export function formatDeckResults(results) {
+    //console.log("formatDeckResults: results=", results)
     return results === null
         ? setDummyData()
         : JSON.parse(results)

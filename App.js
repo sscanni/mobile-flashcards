@@ -4,7 +4,7 @@ import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './reducers'
 import DeckList from './components/decklist'
-import { createAppContainer, createBottomTabNavigator, createStackNavigator  } from 'react-navigation'
+import { createAppContainer, createBottomTabNavigator, createStackNavigator } from 'react-navigation'
 import { purple, white } from './utils/colors'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { Constants } from 'expo'
@@ -12,6 +12,7 @@ import DeckDetail from './components/deckdetail'
 import AddCard from './components/addcard'
 import AddDeck from './components/adddeck'
 import Quiz from './components/quiz'
+import { setLocalNotification } from './utils/helpers'
 
 function UdaciStatusBar({ backgroundColor, ...props }) {
   return (
@@ -56,42 +57,46 @@ const Tabs = createAppContainer(createBottomTabNavigator({
     }
   }))
 
-  const MainNavigator = createAppContainer(createStackNavigator({
-    Home: {
-      screen: Tabs,
-    },
-    DeckDetail: {
-      screen: DeckDetail,
-      navigationOptions: {
-        headerTintColor: white,
-        headerStyle: {
-          backgroundColor: purple,
-        }
+const MainNavigator = createAppContainer(createStackNavigator({
+  Home: {
+    screen: Tabs,
+  },
+  DeckDetail: {
+    screen: DeckDetail,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: purple,
       }
-    },
-    AddCard: {
-      screen: AddCard,
-      navigationOptions: {
-        title: 'Add Card',
-        headerTintColor: white,
-        headerStyle: {
-          backgroundColor: purple,
-        }
+    }
+  },
+  AddCard: {
+    screen: AddCard,
+    navigationOptions: {
+      title: 'Add Card',
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: purple,
       }
-    },
-    Quiz: {
-      screen: Quiz,
-      navigationOptions: {
-        title: 'Quiz',
-        headerTintColor: white,
-        headerStyle: {
-          backgroundColor: purple,
-        }
+    }
+  },
+  Quiz: {
+    screen: Quiz,
+    navigationOptions: {
+      title: 'Quiz',
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: purple,
       }
-    },
-  }))
+    }
+  },
+}))
 
 export default class App extends React.Component {
+
+  componentDidMount() {
+    setLocalNotification()
+  }
   render() {
     return (
       <Provider store={createStore(reducer)}>

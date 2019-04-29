@@ -1,7 +1,6 @@
 import { RECEIVE_ENTRIES, ADD_ENTRY, ADD_CARD } from '../actions'
 
 function entries(state = {}, action) {
-    console.log("reducer: action.entry=", action.entry)
     switch (action.type) {
         case RECEIVE_ENTRIES:
             return {
