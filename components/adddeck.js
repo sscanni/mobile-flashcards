@@ -79,17 +79,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
         },
-    Deletebtn: {
-        textAlign: 'center', 
-        borderWidth: 0,
-        color: red,
-        borderRadius: Platform.OS === 'ios' ? 16 : 2,
-        marginLeft: 10,
-        marginRight: 10,
-        marginTop: 60,
-        justifyContent: 'center',
-        alignItems: 'center'
-        },
     input: {
         width: 200, 
         height: 44,

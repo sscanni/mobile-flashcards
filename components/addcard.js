@@ -63,7 +63,6 @@ class AddCard extends Component {
 
         return (
             <View style={{ alignItems: 'center' }}>
-                <Text>{key}</Text>
                 <Text>{entries[key].name}</Text>
                 {/* <Text style={{ textAlign: 'center', marginTop: 30, fontSize: 14 }}>Question</Text> */}
                 <TextInput style={styles.input}
@@ -96,17 +95,6 @@ const styles = StyleSheet.create({
         // marginRight: 10,
         // marginTop: 60,
         margin: 60,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    Deletebtn: {
-        textAlign: 'center',
-        borderWidth: 0,
-        color: red,
-        borderRadius: Platform.OS === 'ios' ? 16 : 2,
-        marginLeft: 10,
-        marginRight: 10,
-        marginTop: 60,
         justifyContent: 'center',
         alignItems: 'center'
     },
